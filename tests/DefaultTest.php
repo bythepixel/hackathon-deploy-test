@@ -11,6 +11,6 @@ final class DefaultTest extends TestCase
 
     public function testFalseIsInFactFalse(): void
     {
-        $this->assertFalse(true);
+        $this->assertFalse(false);
     }
 }
