@@ -1,0 +1,15 @@
+on: release
+
+name: Deploy to Production
+
+jobs:
+
+  deploy:
+
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Git checkout Core
+        uses: actions/checkout@v2
