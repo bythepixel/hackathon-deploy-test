@@ -67,7 +67,7 @@ jobs:
     name: Build Docker Image & Deploy to Stage Environment
     needs: php-unit-tests
     runs-on: ubuntu-latest
-    if: github.ref == 'master'
+    if: github.ref == 'refs/heads/master'
 
     steps:
     - name: Checkout
