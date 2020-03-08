@@ -41,7 +41,6 @@ jobs:
     name: Build Docker Image & Deploy to Stage Environment
     needs: php-unit-tests
     runs-on: ubuntu-latest
-    working-directory: ./deploy
     if: github.ref == 'refs/heads/master'
 
     steps:
@@ -69,7 +68,7 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f deploy/Dockerfile .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
@@ -77,7 +76,7 @@ jobs:
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: ecs-task-definition.json
+        task-definition: deploy/ecs-task-definition.json
         container-name: sample-app
         image: ${{ steps.build-image.outputs.image }}
 
