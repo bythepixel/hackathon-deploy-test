@@ -1,0 +1,9 @@
+aws ec2 run-instances
+    --count 1
+    --image-id ami-098616968d61e549e
+    --instance-type t2.micro
+    --iam-instance-profile Name=ecsInstanceRole
+    --security-group-ids sg-39db6543 sg-0793eb4790627e45d
+    --associate-public-ip-address
+    --user-data file://userdata.txt
+    --key-name=Roeland
