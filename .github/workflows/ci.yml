@@ -1,45 +1,45 @@
 on: push
 name: Continuous Integration
-
-jobs:
-
-  php-unit-tests:
-
-    name: Run PHP Unit Tests
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Git checkout Core
-        uses: actions/checkout@v2
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v1
-        with:
-          php-version: '7.4'
-          coverage: none
-
-      - name: Get Composer Cache Directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Setup cached dependencies
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-
-      - name: Install Dependencies
-        run: composer install --prefer-dist --no-interaction --optimize-autoloader
-
-      - name: Run PHPUnit
-        run: vendor/bin/phpunit tests
+#
+#jobs:
+#
+#  php-unit-tests:
+#
+#    name: Run PHP Unit Tests
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#
+#      - name: Git checkout Core
+#        uses: actions/checkout@v2
+#
+#      - name: Setup PHP
+#        uses: shivammathur/setup-php@v1
+#        with:
+#          php-version: '7.4'
+#          coverage: none
+#
+#      - name: Get Composer Cache Directory
+#        id: composer-cache
+#        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+#
+#      - name: Setup cached dependencies
+#        uses: actions/cache@v1
+#        with:
+#          path: ${{ steps.composer-cache.outputs.dir }}
+#          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+#          restore-keys: ${{ runner.os }}-composer-
+#
+#      - name: Install Dependencies
+#        run: composer install --prefer-dist --no-interaction --optimize-autoloader
+#
+#      - name: Run PHPUnit
+#        run: vendor/bin/phpunit tests
 
   build-and-deploy-to-stage:
 
     name: Build Docker Image & Deploy to Stage Environment
-    needs: php-unit-tests
+#    needs: php-unit-tests
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
 
@@ -84,7 +84,7 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: sample-app-service
-        cluster: default
-        wait-for-service-stability: false
+        service: devbeat-staging
+        cluster: devbeat
+        wait-for-service-stability: true
         wait-for-minutes: 1
