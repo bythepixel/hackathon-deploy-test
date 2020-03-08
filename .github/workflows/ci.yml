@@ -1,7 +1,7 @@
 on: push
 name: Continuous Integration
-#
-#jobs:
+
+jobs:
 #
 #  php-unit-tests:
 #
