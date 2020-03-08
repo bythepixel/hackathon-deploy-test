@@ -33,7 +33,7 @@
       "secrets": null,
       "dockerSecurityOptions": null,
       "memory": null,
-      "memoryReservation": 256,
+      "memoryReservation": 128,
       "volumesFrom": [],
       "stopTimeout": null,
       "image": "php:7.4.3-apache",
